@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define w(t) ll t;cin>>t;while(t--)
+#define ll long long
+#define ff first
+#define ss second
+
+/*--------------------------------------------------------------------------------------------------
+*/
+//Modular Arithmetic 
+//recursive and iterative Binary Power Function
+
+//Binary Exponentiation with Modulo
+//trying to calculate pow(n , m) % M
+const int M=1e9+7;
+long long binPow(long long n, long long m )
+{
+    if(m == 0) return 1;
+    if(m == 1)return n % M;
+    if(m % 2 == 0)return (binPow( (n * n) % M, m / 2)) % M;
+    return (n * binPow( (n * n) % M, m / 2)) % M;   
+}
+
+
+
+long long itBinPow(long long n, long long m)
+{
+    //using while loop
+    long long res = 1;
+    while(m > 0)
+    {
+        if( m % 2 == 0)
+        {
+            m = m >> 1;
+            n = (n * n) % M;
+        }
+        else
+        {
+            res = (res * n ) % M;
+            n = (n * n) % M;
+            m = m >> 1;
+        }
+    }
+    return res;
+}
+
+int main()
+{
+    cout<< binPow(10, 45) << endl;
+    cout << itBinPow(10, 45) << endl;
+}
