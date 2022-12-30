@@ -1,0 +1,49 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define w(t) ll t;cin>>t;while(t--)
+#define ll long long
+#define ff first
+#define ss second
+
+/*--------------------------------------------------------------------------------------------------
+*/
+
+
+// Sieve of Eratosthenes
+//please note that 0 and 1 are not prime numbers 
+int isPrime[200];
+void DocreateAllmyPrimes()
+{
+    for(int i = 0; i <= 199; i++){
+        isPrime[i] = 1;
+    }
+    for(int i = 2; i <= 199 ; i++)
+    {
+        if(isPrime[i] == 0) continue;
+        for(int j = i + i; j <= 199; j+=i)
+        {
+            isPrime[j] = 0;
+        }
+    }
+}
+
+// The sieve algorithm gives the primes till a number n  in O( n * logn * logn)
+
+
+
+int main()
+{
+    
+    //lets print all the prime numbers from 1 to 199
+    
+    DocreateAllmyPrimes();
+    cout << isPrime[3] << endl;
+    for(int i = 2; i <= 199; i++)
+    {
+        if( isPrime[i] == 1 )
+        {
+            cout << i << " " ;
+        }
+    }
+
+}
