@@ -1,0 +1,122 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define w(t) ll t;cin>>t;while(t--)
+#define ll long long
+#define ff first
+#define ss second
+
+/*--------------------------------------------------------------------------------------------------
+*/
+//Primality check Using Sieve and naive method 
+//Alos can get the Prime factorisation 
+
+
+// Naive Primality Check
+//in O( sqrtn )
+
+bool isPrimeornot( int x )
+{
+    for(int i = 2; i * i <= x; ++i)
+    {
+        if(x % i == 0)return false;
+    }
+    return true;
+}
+
+//Primality check code in lesser Complexity
+
+//finding the prime factorisation for numbers uptill n using the sieve or the
+//Naive approach
+
+
+const int N=1000;
+int isPrime[N];
+int fPrime[N];
+
+void CreateTheSieve( )
+{
+    for(int i = 0; i < N; i++)
+    {
+        isPrime[i]=1;
+    }
+
+    for(int i = 2; i < N; i++)
+    {
+        if( isPrime[i] == 1)
+        {
+            fPrime[i] = i;
+            for(int j = i + i; j < N; j+=i)
+            {
+                isPrime[j] = 0;
+                fPrime[j] = i;
+            }
+        }
+    }
+
+}
+
+
+
+
+int main()
+{
+    //finding the Prime factors using the sieve
+    //firstly Create the sieve calling the function
+
+    CreateTheSieve();
+
+    int n;
+    cin >> n;
+
+    // for(int i =1; i < N; i++)
+    // {
+    //     cout << fPrime[i] << endl;
+    // }
+    vector< int >ans;
+    while(n != 1)
+    {
+        ans.push_back( fPrime[n] );
+        n /= fPrime[n];
+    }
+    sort( ans.begin(), ans.end() );
+    cout << ans.size() << endl;
+    for(auto value : ans )
+    {
+        cout << value << " ";
+    }
+    cout << endl;
+
+    //Now the creating the Prime Factorisation Using the Primallity check
+
+    //Algo
+    // start from the lowest Prime and divide the number till it is divissible
+    //going till sqrt(n) if n != 1 after this there is exactly one Prime factor
+    //greater than sqrt(n) and is n now
+
+    ll m;
+    cin >> m;
+    vector < int > v;
+    for(int i = 2; i * i <= m; i++)
+    {
+        if(isPrimeornot(i))
+        {
+            while(m % i == 0)
+            {
+                m /= i;
+                v.push_back( i );
+            }
+        }
+    }
+
+    if(m != 1)
+    {
+        v.push_back( m );
+    }
+
+    cout << v.size( ) << endl;
+    for(auto val : v)
+    {
+        cout << val <<" ";
+    }
+    cout << endl;
+}
