@@ -1,0 +1,78 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define    ll     long long
+#define    ff     first
+#define    ss     second
+#define    w(t)   ll t; cin >> t; while( t-- )
+
+/*--------------------------------------------------------------------------------------------------
+*/
+
+
+//create Palindrome from a given string 
+
+const int M=1e9+7;
+
+int main()
+{
+	 string s;
+	 cin >> s;
+	 ll n = s.size();
+	 vector < ll > hsh (26);
+
+	 for (ll i = 0; i < n; i++)
+	 {
+	 	  hsh[s[i] - 'A']++;
+	 } 
+
+	 ll odd_ct = 0;
+
+	 for (ll i = 0; i < 26; i++)
+	 {
+	 	  if(hsh[i] % 2 != 0)
+	 	  {
+	 	  	   odd_ct ++;
+	 	  }
+	 }
+
+	 if(odd_ct > 1)
+	 {
+	 	  cout << "NO SOLUTION" << endl;
+	 	  return 0;
+	 }
+
+	 string odd = "";
+
+	 for (ll i = 0; i < 26; i++)
+	 {
+	 	 if(hsh[i] % 2 != 0)
+	 	 {
+	 	 	  for(ll j = 0; j < hsh[i]; j++)
+	 	 	  {
+	 	 	  	  odd.push_back(i + 'A');
+	 	 	  }
+	 	 	  break;
+	 	 }
+	 }
+
+	 string ans = "";
+
+	 for (ll i = 0; i < 26; i++)
+	 {
+	 	  if(hsh[i] % 2 != 0)continue;
+	 	  ll ct_of_curr = hsh[i] / 2;
+
+	 	      for(ll j = 0; j < ct_of_curr; j++)
+	 	      {
+	 	      	  ans.push_back(i + 'A');
+	 	      }
+	 }
+
+	 string temp = ans;
+	 reverse (temp.begin() , temp.end() );
+	 ans = ans + odd + temp;
+
+	 cout << ans << endl;
+}
+
+  
