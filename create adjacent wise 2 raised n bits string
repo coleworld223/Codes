@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define    ll     long long
+#define    ff     first
+#define    ss     second
+#define    w(t)   ll t; cin >> t; while( t-- )
+
+/*--------------------------------------------------------------------------------------------------
+*/
+
+
+//create Palindrome from a given string 
+
+const int M=1e9+7;
+
+int main()
+{
+	 ll n;
+	 cin >> n;
+
+	 ll len = pow (2, n);
+	 string temp = "";
+
+	 for (ll i = 0; i < n; i++)
+	 {
+	 	  temp.push_back('0');
+	 }
+
+	 vector < string > ans;
+
+	 ans.push_back( temp );
+	 temp[temp.size() - 1] = '1';
+	 ans.push_back( temp );
+
+	 //the basic structure of the answer is ready
+
+	 //from where till where should we run the loop
+
+	 ll msb = 2;
+	 while( ans.size() < len )
+	 {
+	 	  vector < string > create = ans;
+	 	  //now reverse the vector and set msb to 1 and again merge the vectors
+	 	  reverse (create.begin() , create.end());
+	 	  for(ll i = 0; i < create.size(); i++)
+	 	  {
+	 	  	   create[i][create[i].size() - msb] = '1';
+	 	  	   ans.push_back( create[i] );
+	 	  }
+	 	  msb ++;
+	 }
+
+	 for ( auto val : ans )
+	 {
+	 	  cout << val << endl;
+	 }
+
+
+}
+
+  
