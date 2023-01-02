@@ -1,0 +1,58 @@
+#include <bits/stdc++.h>
+using   namespace   std;
+#define      ll      long long
+#define      ff      first
+#define      ss      second
+#define      w(t)    ll t; cin >> t; while(t--)
+
+/*
+-----------------------------------------------------------
+*/
+
+
+//using the two pointer method 
+//seeing how many pairs can we form
+
+int main()
+{
+	 ll n, x;
+	 cin >> n >> x;
+
+	 vector <ll> v(n + 1);
+
+	 vector <bool> done(n + 1, false);
+
+	 for (ll i = 1; i <= n; i++)
+	 {
+	 	  cin >> v[i];
+	 }
+
+	 sort (v.begin() , v.end());
+
+
+	 ll i = 1;
+	 ll j = n;
+	 ll ans = 0;
+
+	 while(i < j)
+	 {
+	 	  if(v[i] + v[j] > x)
+	 	  {
+	 	  	  j--;
+	 	  }
+	 	  else
+	 	  {
+	 	  	  ans ++;
+	 	  	  done[i] = true;
+	 	  	  done[j] = true;
+	 	  	  i++; j--;
+	 	  }
+	 }
+
+	 for (ll i = 1; i <= n; i++)
+	 {
+	 	  ans += (done[i] == false);
+	 }
+
+	 cout << ans << endl;
+}
