@@ -1,0 +1,70 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define      ll         long long
+#define      ff         first
+#define      ss         second
+#define      w(t)       ll t; cin >> t; while(t--)
+#define      pb         push_back
+#define      fastio()   ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+/*-----------------------------------------------------------------------------------
+*/
+const int MOD = 1e9 + 7;
+const int N = 2e6 + 7;
+vector <ll> fact(N);
+void precompute(){
+	ll ff = 1;
+	fact[0] = 1;
+	for (ll i = 1; i <= N - 1; i++){
+		ff *= i;
+		ff %= MOD;
+		fact[i] = ff;
+	}
+}
+
+ll binPow(ll N, ll p){
+	ll res = 1;
+	ll side = N;
+	while(p){
+		if(p & 1){
+			side %= MOD;
+			res %= MOD;
+			res *= side;
+			res %= MOD;
+			side *= side;
+			side %= MOD;
+		}
+		else{
+			side *= side;
+			side %= MOD;
+		}
+		p = (p >> 1);
+	}
+	return res % MOD;
+}
+
+ll fndInv(ll a){
+	return binPow(a, MOD - 2);
+}
+
+ll nCr(ll n, ll r){
+	r = min(r, n - r);
+	return (((((fact[n] * fndInv(fact[n - r])) % MOD) * fndInv(fact[r])) % MOD)) % MOD;
+}
+
+
+void solve(){
+	ll n;
+	cin >> n;
+
+	cout << (fact[n] - binPow(2, n - 1) + MOD) % MOD << endl; 
+}
+
+int main(){
+	precompute();
+	// w(t){
+	// 	solve();
+	// }
+	solve();
+}
+
