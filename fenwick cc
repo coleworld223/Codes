@@ -1,0 +1,78 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+template<typename C>
+class fenwick {
+  vector<C> t;
+  int n;
+public:
+  fenwick(int _n = 0) : n(_n) {
+    t.resize(n, 1e9);
+  }
+  fenwick(const vector<C>& a) : n(a.size()) {
+    t.resize(n);
+    for (int i = 0; i < n; ++i) {
+      upd(i, a[i]);
+    }
+  }
+
+  C get(int k) {
+    C res = 1e9;
+    for (k; k >= 0; k = (k & (k + 1)) - 1) {
+      res = min(res, t[k]);
+    }
+    return res;
+  }
+
+  void upd(int k, C x) {
+    for (k; k < n; k |= k + 1) {
+      t[k] = min(t[k], x);
+    }
+  }
+
+  C get(int l, int r) {
+    return get(r) - get(l - 1);
+  }
+};
+
+void test_case(int testcase_number) {
+  int n;
+  cin >> n;
+  vector<int> x(n), y(n);
+  for (int i = 0; i < n; ++i) cin >> x[i];
+  for (int i = 0; i < n; ++i) cin >> y[i];
+  // x[j] < y[i] < y[j], min -> j
+  vector<int> dp(n);
+  fenwick<int> tr(2 * n + 1);
+  vector<int> z(2 * n + 1);
+  for (int i = 0; i < n; ++i) z[x[i]] = i + 1;
+  for (int i = 0; i < n; ++i) z[y[i]] = -i - 1;
+  for (int i = 1; i <= 2 * n; ++i) {
+    if (z[i] > 0) {
+      int j = z[i] - 1;
+      tr.upd(2 * n - y[j], j);
+    } else {
+      int j = -z[i] - 1;
+      int k = tr.get(2 * n - y[j] - 1);
+      if (k != 1e9) {
+        dp[k] = max(dp[k], dp[j] + 1);
+      }
+    }
+  }
+  cout << *max_element(dp.begin(), dp.end());
+}
+
+int main() {
+  ios::sync_with_stdio(0);
+  cin.tie(0), cout.tie(0);
+
+  int t;
+  cin >> t;
+  for (int it = 1; it <= t; ++it) {
+    test_case(it);
+    cout << '\n';
+  }
+
+  return 0;
+}
